@@ -81,3 +81,10 @@ android-sdk/ -e
 # Environment files
 *.env
 *.env.*
+node_modules/
+.emergent/
+memory/
+test_reports/
+tests/
+*.log
+.env
