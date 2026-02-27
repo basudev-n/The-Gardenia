@@ -83,6 +83,27 @@ class BrochureLeadCreate(BaseModel):
     phone: str
     preference: Optional[str] = None
 
+class ContactLead(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    phone: str
+    email: Optional[str] = None
+    message: Optional[str] = None
+    preferredDate: Optional[str] = None
+    preferredTime: Optional[str] = None
+    preferredContact: Optional[str] = None
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class ContactLeadCreate(BaseModel):
+    name: str
+    phone: str
+    email: Optional[str] = None
+    message: Optional[str] = None
+    preferredDate: Optional[str] = None
+    preferredTime: Optional[str] = None
+    preferredContact: Optional[str] = None
+
 
 # ─────────────────────────────────────────────
 # WhatsApp Notification (CallMeBot)
@@ -223,3 +244,93 @@ app.include_router(api_router)
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
+
+
+def send_contact_email(lead: 'ContactLead'):
+    try:
+        sender_email = os.environ.get('EMAIL_USER')
+        sender_password = os.environ.get('EMAIL_PASS')
+        recipient = "thegardenia15@gmail.com"
+        if not sender_email or not sender_password:
+            return
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = f"📋 New Site Visit Request: {lead.name}"
+        msg["From"] = sender_email
+        msg["To"] = recipient
+        html = f"""
+        <html>
+          <body style="font-family: Arial, sans-serif; color: #333;">
+            <div style="max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 10px; overflow: hidden;">
+              <div style="background: #059669; padding: 24px;">
+                <h2 style="color: white; margin: 0;">New Site Visit Request</h2>
+                <p style="color: #d1fae5; margin: 4px 0 0;">The Gardenia — Contact Form</p>
+              </div>
+              <div style="padding: 24px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                  <tr><td style="padding: 10px; font-weight: bold; color: #6b7280; width: 160px;">Name</td><td style="padding: 10px;">{lead.name}</td></tr>
+                  <tr style="background:#f9fafb;"><td style="padding: 10px; font-weight: bold; color: #6b7280;">Phone</td><td style="padding: 10px;"><a href="tel:{lead.phone}" style="color:#059669;">{lead.phone}</a></td></tr>
+                  <tr><td style="padding: 10px; font-weight: bold; color: #6b7280;">Email</td><td style="padding: 10px;">{lead.email or 'Not provided'}</td></tr>
+                  <tr style="background:#f9fafb;"><td style="padding: 10px; font-weight: bold; color: #6b7280;">Preferred Contact</td><td style="padding: 10px;">{lead.preferredContact or 'Not specified'}</td></tr>
+                  <tr><td style="padding: 10px; font-weight: bold; color: #6b7280;">Visit Date</td><td style="padding: 10px;">{lead.preferredDate or 'Not specified'}</td></tr>
+                  <tr style="background:#f9fafb;"><td style="padding: 10px; font-weight: bold; color: #6b7280;">Visit Time</td><td style="padding: 10px;">{lead.preferredTime or 'Not specified'}</td></tr>
+                  <tr><td style="padding: 10px; font-weight: bold; color: #6b7280;">Message</td><td style="padding: 10px;">{lead.message or 'No message'}</td></tr>
+                  <tr style="background:#f9fafb;"><td style="padding: 10px; font-weight: bold; color: #6b7280;">Submitted At</td><td style="padding: 10px;">{lead.timestamp.strftime('%d %b %Y, %I:%M %p')} UTC</td></tr>
+                </table>
+              </div>
+            </div>
+          </body>
+        </html>
+        """
+        msg.attach(MIMEText(html, "html"))
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, recipient, msg.as_string())
+        logger.info(f"Contact email sent for {lead.name}")
+    except Exception as e:
+        logger.error(f"Failed to send contact email: {e}")
+
+
+def send_contact_whatsapp(lead: 'ContactLead'):
+    try:
+        whatsapp_phone = os.environ.get('WHATSAPP_PHONE')
+        whatsapp_apikey = os.environ.get('CALLMEBOT_APIKEY')
+        if not whatsapp_phone or not whatsapp_apikey:
+            return
+        message = (
+            f"📋 *New Site Visit Request - The Gardenia*\n\n"
+            f"👤 *Name:* {lead.name}\n"
+            f"📞 *Phone:* {lead.phone}\n"
+            f"📧 *Email:* {lead.email or 'Not provided'}\n"
+            f"📅 *Visit Date:* {lead.preferredDate or 'Not specified'}\n"
+            f"🕐 *Visit Time:* {lead.preferredTime or 'Not specified'}\n"
+            f"💬 *Message:* {lead.message or 'No message'}"
+        )
+        encoded_message = urllib.parse.quote(message)
+        url = f"https://api.callmebot.com/whatsapp.php?phone={whatsapp_phone}&text={encoded_message}&apikey={whatsapp_apikey}"
+        urllib.request.urlopen(url, timeout=10)
+        logger.info(f"WhatsApp contact notification sent for {lead.name}")
+    except Exception as e:
+        logger.error(f"Failed to send WhatsApp contact notification: {e}")
+
+
+# ── Contact Lead Routes ──
+from fastapi import APIRouter as _AR
+
+@api_router.post("/contact-lead")
+async def submit_contact_lead(input: ContactLeadCreate):
+    from pydantic import BaseModel as _BM
+    lead_obj = ContactLead(**input.model_dump())
+    doc = lead_obj.model_dump()
+    doc['timestamp'] = doc['timestamp'].isoformat()
+    await db.contact_leads.insert_one(doc)
+    send_contact_email(lead_obj)
+    send_contact_whatsapp(lead_obj)
+    return lead_obj
+
+@api_router.get("/contact-leads")
+async def get_contact_leads():
+    leads = await db.contact_leads.find({}, {"_id": 0}).to_list(1000)
+    for lead in leads:
+        if isinstance(lead['timestamp'], str):
+            lead['timestamp'] = datetime.fromisoformat(lead['timestamp'])
+    return leads
