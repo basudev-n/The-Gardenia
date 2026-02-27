@@ -321,8 +321,8 @@ const Contact = () => {
               {
                 icon: Mail,
                 title: 'Email',
-                body: ['info@thegardenia.com', 'sales@thegardenia.com'],
-                cta: 'mailto:info@thegardenia.com',
+                body: ['info@gardenia.homes', 'sales@thegardenia.com'],
+                cta: 'mailto:info@gardenia.homes',
                 ctaLabel: 'Send email'
               },
               {

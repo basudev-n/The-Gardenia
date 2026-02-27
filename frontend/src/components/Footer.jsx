@@ -106,7 +106,7 @@ const Footer = () => {
               <li className="flex items-start space-x-3">
                 <Mail className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p>info@thegardenia.com</p>
+                  <p>info@gardenia.homes</p>
                 </div>
               </li>
               <li className="flex items-start space-x-3">
@@ -143,7 +143,7 @@ const Footer = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm text-gray-400">
-              © {currentYear} The Gardenia. All rights reserved.
+              © {currentYear} The Gardenia. Made with ❤️ by Rigeup.
             </p>
             <div className="flex space-x-6 text-sm">
               <a href="#" className="hover:text-emerald-400 transition-colors duration-200">
