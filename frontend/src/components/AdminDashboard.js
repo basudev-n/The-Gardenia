@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Lock, LogOut, Users, Phone, Home, Calendar, Download, RefreshCw, Search, TrendingUp, Bell } from 'lucide-react';
 
-const API_URL = process.env.REACT_APP_API_URL || '';
+const API_URL = 'https://keen-heart-production-4c82.up.railway.app';
 const ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD || 'gardenia2024';
 
 const AdminDashboard = () => {

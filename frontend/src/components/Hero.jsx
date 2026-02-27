@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { mockData } from '../mock/data';
 
 const PREFERENCES = ['2 BHK', '3 BHK', '3.5 BHK', '5 BHK Penthouse'];
-const API_URL = process.env.REACT_APP_API_URL || '';
+const API_URL = 'https://keen-heart-production-4c82.up.railway.app';
 
 const Hero = () => {
   const { hero } = mockData;
