@@ -1,0 +1,131 @@
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Remove any default text-align center */
+.App {
+    text-align: left;
+}
+
+/* Custom animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-from-bottom {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation utilities */
+.animate-in {
+    animation: fade-in 0.6s ease-out;
+}
+
+.fade-in {
+    animation-name: fade-in;
+}
+
+.slide-in-from-bottom-4 {
+    animation-name: slide-in-from-bottom;
+    animation-duration: 0.7s;
+}
+
+.slide-in-from-bottom-6 {
+    animation-name: slide-in-from-bottom;
+    animation-duration: 0.7s;
+}
+
+.slide-in-from-bottom-8 {
+    animation-name: slide-in-from-bottom;
+    animation-duration: 0.7s;
+}
+
+.slide-in-from-bottom-10 {
+    animation-name: slide-in-from-bottom;
+    animation-duration: 0.7s;
+}
+
+.slide-in-from-bottom-12 {
+    animation-name: slide-in-from-bottom;
+    animation-duration: 0.7s;
+}
+
+.slide-in-from-bottom-14 {
+    animation-name: slide-in-from-bottom;
+    animation-duration: 0.7s;
+}
+
+.slide-in-from-top {
+    animation: slide-in-from-top 0.3s ease-out;
+}
+
+@keyframes slide-in-from-top {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.duration-300 {
+    animation-duration: 0.3s;
+}
+
+.duration-700 {
+    animation-duration: 0.7s;
+}
+
+.delay-100 {
+    animation-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+}
+
+.delay-400 {
+    animation-delay: 0.4s;
+}
+
+.delay-500 {
+    animation-delay: 0.5s;
+}
+
+/* Ensure form inputs have proper focus rings */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+}
+
+/* Image loading optimization */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Disable default button styles */
+button {
+    cursor: pointer;
+}
