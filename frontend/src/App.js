@@ -10,8 +10,16 @@ import Location from "@/components/Location";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
+import AdminDashboard from "@/components/AdminDashboard";
 
 function App() {
+  // Simple client-side routing for admin
+  const isAdmin = window.location.pathname === '/admin';
+
+  if (isAdmin) {
+    return <AdminDashboard />;
+  }
+
   return (
     <div className="App">
       <Header />
