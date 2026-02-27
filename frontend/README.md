@@ -68,3 +68,19 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Backend API Configuration (Railway)
+
+To make form submissions work with your deployed backend, create a `.env` file in `frontend/` with:
+
+```bash
+REACT_APP_API_URL=https://<your-railway-backend-domain>
+```
+
+Example:
+
+```bash
+REACT_APP_API_URL=https://gardenia-api-production.up.railway.app
+```
+
+The contact form and brochure form submit to `${REACT_APP_API_URL}/api/...`.

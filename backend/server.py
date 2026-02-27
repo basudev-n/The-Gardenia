@@ -12,6 +12,8 @@ from datetime import datetime, timezone
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import urllib.parse
+import urllib.request
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -21,11 +23,17 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create the main app without a prefix
 app = FastAPI()
-
-# Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
+
+# ─── CORS must be added FIRST ───
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # ─────────────────────────────────────────────
@@ -56,7 +64,38 @@ class BrochureLeadCreate(BaseModel):
 
 
 # ─────────────────────────────────────────────
-# Email helper
+# WhatsApp Notification (CallMeBot)
+# ─────────────────────────────────────────────
+
+def send_whatsapp_notification(lead: BrochureLead):
+    try:
+        whatsapp_phone = os.environ.get('WHATSAPP_PHONE')
+        whatsapp_apikey = os.environ.get('CALLMEBOT_APIKEY')
+
+        if not whatsapp_phone or not whatsapp_apikey:
+            logger.warning("WhatsApp credentials not set. Skipping WhatsApp notification.")
+            return
+
+        message = (
+            f"🏠 *New Brochure Lead - The Gardenia*\n\n"
+            f"👤 *Name:* {lead.name}\n"
+            f"📞 *Phone:* {lead.phone}\n"
+            f"🏡 *Preference:* {lead.preference or 'Not specified'}\n"
+            f"🕐 *Time:* {lead.timestamp.strftime('%d %b %Y, %I:%M %p')} UTC"
+        )
+
+        encoded_message = urllib.parse.quote(message)
+        url = f"https://api.callmebot.com/whatsapp.php?phone={whatsapp_phone}&text={encoded_message}&apikey={whatsapp_apikey}"
+
+        urllib.request.urlopen(url, timeout=10)
+        logger.info(f"WhatsApp notification sent for lead: {lead.name}")
+
+    except Exception as e:
+        logger.error(f"Failed to send WhatsApp notification: {e}")
+
+
+# ─────────────────────────────────────────────
+# Email Notification
 # ─────────────────────────────────────────────
 
 def send_lead_email(lead: BrochureLead):
@@ -153,8 +192,8 @@ async def submit_brochure_lead(input: BrochureLeadCreate):
     doc = lead_obj.model_dump()
     doc['timestamp'] = doc['timestamp'].isoformat()
     await db.brochure_leads.insert_one(doc)
-    # Send email notification
     send_lead_email(lead_obj)
+    send_whatsapp_notification(lead_obj)
     return lead_obj
 
 @api_router.get("/brochure-leads", response_model=List[BrochureLead])
@@ -171,14 +210,6 @@ async def get_brochure_leads():
 # ─────────────────────────────────────────────
 
 app.include_router(api_router)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 logging.basicConfig(
     level=logging.INFO,

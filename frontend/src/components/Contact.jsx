@@ -13,10 +13,11 @@ import {
   Sparkles,
   CheckCircle2,
   MessageSquare,
-  PhoneCall
+  PhoneCall,
+  X,
+  CheckCircle
 } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
-import { handleContactSubmit, handleSiteVisit } from '../mock/data';
 
 const initialFormData = {
   name: '',
@@ -27,12 +28,16 @@ const initialFormData = {
   preferredTime: ''
 };
 
+const API_URL = process.env.REACT_APP_API_URL || '';
+
 const Contact = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const [preferredContact, setPreferredContact] = useState('phone');
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [submittedName, setSubmittedName] = useState('');
 
   const today = useMemo(() => new Date().toISOString().split('T')[0], []);
 
@@ -76,7 +81,12 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const closeSuccessModal = () => {
+    setShowSuccessModal(false);
+    setSubmittedName('');
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const nextErrors = validateForm();
@@ -92,29 +102,33 @@ const Contact = () => {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      const payload = { ...formData, preferredContact };
-      const result = handleContactSubmit(payload);
+    const payload = { ...formData, preferredContact };
 
-      if (formData.preferredDate && formData.preferredTime) {
-        handleSiteVisit({
-          ...payload,
-          date: formData.preferredDate,
-          time: formData.preferredTime
-        });
+    try {
+      const response = await fetch(`${API_URL}/api/contact-lead`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error('Submission failed');
       }
 
-      if (result.success) {
-        toast({
-          title: 'Thank you for your interest!',
-          description: 'Our team will contact you within 24 hours.'
-        });
-        setFormData(initialFormData);
-        setPreferredContact('phone');
-      }
-
+      setSubmittedName(formData.name.trim());
+      setShowSuccessModal(true);
+      setFormData(initialFormData);
+      setPreferredContact('phone');
+      setErrors({});
+    } catch (err) {
+      toast({
+        title: 'Unable to submit right now',
+        description: 'Please try again in a moment or call us directly.',
+        variant: 'destructive'
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 900);
+    }
   };
 
   return (
@@ -360,6 +374,42 @@ const Contact = () => {
           </div>
         </div>
       </div>
+
+      {showSuccessModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/55 px-4">
+          <div className="w-full max-w-md rounded-3xl bg-white shadow-2xl overflow-hidden">
+            <div className="flex items-center justify-between bg-emerald-600 px-6 py-4">
+              <h4 className="text-lg font-semibold text-white">Form Submitted Successfully</h4>
+              <button
+                type="button"
+                onClick={closeSuccessModal}
+                className="rounded-full p-1 text-white/90 hover:bg-white/15 transition-colors"
+                aria-label="Close success popup"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="px-6 py-7 text-center">
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100">
+                <CheckCircle className="h-8 w-8 text-emerald-600" />
+              </div>
+              <p className="text-lg font-semibold text-gray-900">Thank you{submittedName ? `, ${submittedName.split(' ')[0]}` : ''}!</p>
+              <p className="mt-2 text-sm text-gray-600">
+                Your form is successfully submitted and someone from our team will get back to you shortly.
+              </p>
+
+              <Button
+                type="button"
+                onClick={closeSuccessModal}
+                className="mt-6 w-full bg-emerald-600 hover:bg-emerald-700 text-white"
+              >
+                Done
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
