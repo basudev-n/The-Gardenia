@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Waves, Trees, Dumbbell, Users, Shield, Baby, Car, Film, Heart, Coffee, Armchair, Sparkles, Circle, Disc, Droplets, Gamepad2, Laptop, BedDouble, Gamepad, Sun, Wind, Activity, Bath, Home, School, Stethoscope, Building } from 'lucide-react';
+import { Waves, Trees, Dumbbell, Users, Shield, Baby, Car, Film, Heart, Coffee, Armchair, Sparkles, Circle, Disc, Droplets, Gamepad2, Laptop, BedDouble, Gamepad, Sun, Wind, Activity, Bath, Home, School, Stethoscope, Building, Landmark, Gem, TowerControl, Leaf } from 'lucide-react';
 import { mockData } from '../mock/data';
 
 const iconMap = {
@@ -57,18 +57,56 @@ const Amenities = () => {
         </div>
 
         {/* Stats Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
           {[
-            { number: "28+", label: "Amenities" },
-            { number: "252", label: "Homes" },
-            { number: "2", label: "Iconic Towers" },
-            { number: "∞", label: "Lifestyle" },
-          ].map((stat, i) => (
-            <div key={i} className="text-center bg-white rounded-2xl py-6 shadow-sm border border-gray-100">
-              <p className="text-3xl font-bold text-emerald-600">{stat.number}</p>
-              <p className="text-sm text-gray-500 mt-1">{stat.label}</p>
-            </div>
-          ))}
+            {
+              number: "28+",
+              label: "Premium Amenities",
+              subtitle: "Curated for leisure and wellness",
+              icon: Landmark,
+            },
+            {
+              number: "252",
+              label: "Luxury Homes",
+              subtitle: "Thoughtfully crafted residences",
+              icon: Gem,
+            },
+            {
+              number: "2",
+              label: "Iconic Towers",
+              subtitle: "Skyline-defining architecture",
+              icon: TowerControl,
+            },
+            {
+              number: "∞",
+              label: "Lifestyle Value",
+              subtitle: "Comfort that grows with you",
+              icon: Leaf,
+            },
+          ].map((stat, i) => {
+            const StatIcon = stat.icon;
+
+            return (
+              <div
+                key={i}
+                className="group relative overflow-hidden rounded-3xl border border-emerald-100/80 bg-white/90 p-6 shadow-[0_10px_35px_rgba(16,185,129,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(16,185,129,0.16)]"
+              >
+                <div className="absolute right-0 top-0 h-20 w-20 translate-x-8 -translate-y-8 rounded-full bg-emerald-100/70 transition-colors duration-300 group-hover:bg-emerald-200/80" />
+
+                <div className="relative flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-4xl font-bold leading-none text-emerald-600">{stat.number}</p>
+                    <p className="mt-3 text-base font-semibold text-gray-900">{stat.label}</p>
+                    <p className="mt-1 text-sm text-gray-500">{stat.subtitle}</p>
+                  </div>
+
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-600 transition-colors duration-300 group-hover:bg-emerald-600 group-hover:text-white">
+                    <StatIcon className="h-5 w-5" />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Featured Amenities — Big Cards */}

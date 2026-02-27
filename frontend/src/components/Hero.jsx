@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import { mockData } from '../mock/data';
 
 const PREFERENCES = ['2 BHK', '3 BHK', '3.5 BHK', '5 BHK Penthouse'];
+const API_URL = process.env.REACT_APP_API_URL || '';
 
 const Hero = () => {
   const { hero } = mockData;
@@ -35,7 +36,7 @@ const Hero = () => {
 
     setLoading(true);
     try {
-      const res = await fetch('/api/brochure-lead', {
+      const res = await fetch(`${API_URL}/api/brochure-lead`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
