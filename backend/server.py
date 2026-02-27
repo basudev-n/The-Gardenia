@@ -1,6 +1,8 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, Request
+from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
@@ -18,6 +20,9 @@ import urllib.request
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
@@ -26,13 +31,29 @@ db = client[os.environ['DB_NAME']]
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
 
-# ─── CORS must be added FIRST ───
+# ─── Extra CORS safety — inject headers on every response ───
+class CORSExtraMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        if request.method == "OPTIONS":
+            response = JSONResponse(content={}, status_code=200)
+            response.headers["Access-Control-Allow-Origin"] = "*"
+            response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+            response.headers["Access-Control-Allow-Headers"] = "*"
+            return response
+        response = await call_next(request)
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "*"
+        return response
+
+app.add_middleware(CORSExtraMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 
@@ -71,11 +92,9 @@ def send_whatsapp_notification(lead: BrochureLead):
     try:
         whatsapp_phone = os.environ.get('WHATSAPP_PHONE')
         whatsapp_apikey = os.environ.get('CALLMEBOT_APIKEY')
-
         if not whatsapp_phone or not whatsapp_apikey:
-            logger.warning("WhatsApp credentials not set. Skipping WhatsApp notification.")
+            logger.warning("WhatsApp credentials not set. Skipping.")
             return
-
         message = (
             f"🏠 *New Brochure Lead - The Gardenia*\n\n"
             f"👤 *Name:* {lead.name}\n"
@@ -83,13 +102,10 @@ def send_whatsapp_notification(lead: BrochureLead):
             f"🏡 *Preference:* {lead.preference or 'Not specified'}\n"
             f"🕐 *Time:* {lead.timestamp.strftime('%d %b %Y, %I:%M %p')} UTC"
         )
-
         encoded_message = urllib.parse.quote(message)
         url = f"https://api.callmebot.com/whatsapp.php?phone={whatsapp_phone}&text={encoded_message}&apikey={whatsapp_apikey}"
-
         urllib.request.urlopen(url, timeout=10)
         logger.info(f"WhatsApp notification sent for lead: {lead.name}")
-
     except Exception as e:
         logger.error(f"Failed to send WhatsApp notification: {e}")
 
@@ -103,16 +119,13 @@ def send_lead_email(lead: BrochureLead):
         sender_email = os.environ.get('EMAIL_USER')
         sender_password = os.environ.get('EMAIL_PASS')
         recipient = "thegardenia15@gmail.com"
-
         if not sender_email or not sender_password:
             logger.warning("Email credentials not set. Skipping email.")
             return
-
         msg = MIMEMultipart("alternative")
         msg["Subject"] = f"🏠 New Brochure Lead: {lead.name}"
         msg["From"] = sender_email
         msg["To"] = recipient
-
         html = f"""
         <html>
           <body style="font-family: Arial, sans-serif; color: #333;">
@@ -142,21 +155,17 @@ def send_lead_email(lead: BrochureLead):
                 </table>
               </div>
               <div style="background: #f0fdf4; padding: 16px 24px; border-top: 1px solid #e0e0e0;">
-                <p style="margin: 0; color: #6b7280; font-size: 13px;">This lead was generated from the brochure download form on The Gardenia website.</p>
+                <p style="margin: 0; color: #6b7280; font-size: 13px;">Generated from the brochure download form on The Gardenia website.</p>
               </div>
             </div>
           </body>
         </html>
         """
-
         msg.attach(MIMEText(html, "html"))
-
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(sender_email, sender_password)
             server.sendmail(sender_email, recipient, msg.as_string())
-
         logger.info(f"Lead email sent for {lead.name}")
-
     except Exception as e:
         logger.error(f"Failed to send email: {e}")
 
@@ -175,7 +184,7 @@ async def create_status_check(input: StatusCheckCreate):
     status_obj = StatusCheck(**status_dict)
     doc = status_obj.model_dump()
     doc['timestamp'] = doc['timestamp'].isoformat()
-    _ = await db.status_checks.insert_one(doc)
+    await db.status_checks.insert_one(doc)
     return status_obj
 
 @api_router.get("/status", response_model=List[StatusCheck])
@@ -210,12 +219,6 @@ async def get_brochure_leads():
 # ─────────────────────────────────────────────
 
 app.include_router(api_router)
-
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
