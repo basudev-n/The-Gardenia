@@ -9,7 +9,7 @@ import {
   PieChart, Pie, Cell, CartesianGrid, Legend
 } from 'recharts';
 
-const API_URL = 'https://keen-heart-production-4c82.up.railway.app';
+const API_URL = 'https://gardenia-admin.up.railway.app';
 const ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD || 'gardenia2024';
 
 const STATUS_OPTIONS = ['New', 'Contacted', 'Site Visit Scheduled', 'Closed'];
