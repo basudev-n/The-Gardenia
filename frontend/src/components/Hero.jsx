@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { ArrowRight, MapPin, Download, Calendar, X, CheckCircle, Phone, User, Home } from 'lucide-react';
 import { Button } from './ui/button';
 import { mockData } from '../mock/data';
+import { isValidIndianPhone, normalizeIndianPhone, submitLead } from '@/lib/leadSubmission';
 
-const PREFERENCES = ['2 BHK', '3 BHK', '3.5 BHK', '5 BHK Penthouse'];
-const API_URL = 'https://gardenia-admin.up.railway.app';
-
+const PREFERENCES = ['2 BHK', '3 BHK', '5 BHK Penthouse'];
 const Hero = () => {
   const { hero } = mockData;
   const [showModal, setShowModal] = useState(false);
@@ -29,20 +28,18 @@ const Hero = () => {
       setError('Please fill in your name and phone number.');
       return;
     }
-    if (!/^[0-9]{10}$/.test(form.phone.replace(/\s/g, ''))) {
-      setError('Please enter a valid 10-digit phone number.');
+    if (!isValidIndianPhone(form.phone)) {
+      setError('Please enter a valid +91 phone number with exactly 10 digits.');
       return;
     }
 
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/brochure-lead`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+      await submitLead('/api/brochure-lead', {
+        ...form,
+        phone: normalizeIndianPhone(form.phone),
+        source: 'hero-brochure-form'
       });
-
-      if (!res.ok) throw new Error('Submission failed');
 
       setSubmitted(true);
 

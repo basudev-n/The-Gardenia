@@ -13,7 +13,7 @@ const API_URL = 'https://gardenia-admin.up.railway.app';
 const ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD || 'gardenia2024';
 
 const STATUS_OPTIONS = ['New', 'Contacted', 'Site Visit Scheduled', 'Closed'];
-const PREFERENCES = ['All', '2 BHK', '3 BHK', '3.5 BHK', '5 BHK Penthouse'];
+const PREFERENCES = ['All', '2 BHK', '3 BHK', '5 BHK Penthouse'];
 
 const STATUS_CONFIG = {
   'New':                  { color: 'text-sky-400',    bg: 'bg-sky-500/15',    border: 'border-sky-500/30',    dot: 'bg-sky-400' },
