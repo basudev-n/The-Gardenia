@@ -18,17 +18,16 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
+import { isValidIndianPhone, normalizeIndianPhone, submitLead } from '@/lib/leadSubmission';
 
 const initialFormData = {
   name: '',
   email: '',
-  phone: '',
+  phone: '+91',
   message: '',
   preferredDate: '',
   preferredTime: ''
 };
-
-const API_URL = process.env.REACT_APP_API_URL || '';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -53,8 +52,8 @@ const Contact = () => {
 
     if (!formData.phone.trim()) {
       nextErrors.phone = 'Phone number is required';
-    } else if (!/^\+?[0-9\s-]{10,15}$/.test(formData.phone.trim())) {
-      nextErrors.phone = 'Please enter a valid phone number';
+    } else if (!isValidIndianPhone(formData.phone)) {
+      nextErrors.phone = 'Please enter a valid +91 phone number with exactly 10 digits';
     }
 
     if (formData.message.trim().length > 300) {
@@ -102,18 +101,14 @@ const Contact = () => {
 
     setIsSubmitting(true);
 
-    const payload = { ...formData, preferredContact };
+    const payload = {
+      ...formData,
+      phone: normalizeIndianPhone(formData.phone),
+      preferredContact
+    };
 
     try {
-      const response = await fetch(`${API_URL}/api/contact-lead`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (!response.ok) {
-        throw new Error('Submission failed');
-      }
+      await submitLead('/api/contact-lead', payload);
 
       setSubmittedName(formData.name.trim());
       setShowSuccessModal(true);

@@ -8,7 +8,7 @@ const PREFERENCES = ['2 BHK', '3 BHK', '5 BHK Penthouse'];
 const Hero = () => {
   const { hero } = mockData;
   const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState({ name: '', phone: '', preference: '' });
+  const [form, setForm] = useState({ name: '', phone: '+91', preference: '' });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
