@@ -37,28 +37,29 @@ const Header = () => {
     }`}>
       <div className="container mx-auto px-6">
         <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-16' : 'h-20'}`}>
-          
-          {/* Logo */}
-          <div className="flex items-center flex-shrink-0">
-            <img
-              src="https://customer-assets.emergentagent.com/job_gardenia-pool/artifacts/c0fi5vvp_Untitled%20%28400%20x%20100%20px%29.png"
-              alt="The Gardenia"
-              className={`w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-10' : 'h-14 md:h-16'}`}
-            />
-          </div>
-
-          {/* Header badges (Amenities + Starting Price) */}
-          <div className="hidden md:flex items-center gap-3 ml-6">
-            <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">
-              <span>28+ Lifestyle Amenities</span>
+          {/* Left group: logo + badges */}
+          <div className="flex items-center gap-6">
+            <div className="flex items-center flex-shrink-0">
+              <img
+                src="https://customer-assets.emergentagent.com/job_gardenia-pool/artifacts/c0fi5vvp_Untitled%20%28400%20x%20100%20px%29.png"
+                alt="The Gardenia"
+                className={`w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-10' : 'h-14 md:h-16'}`}
+              />
             </div>
-            <div className="flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">
-              <span>79 Lacs Onwards*</span>
+
+            {/* Header badges (Amenities + Starting Price) */}
+            <div className="hidden md:flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">
+                <span>28+ Lifestyle Amenities</span>
+              </div>
+              <div className="flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">
+                <span>79 Lacs Onwards*</span>
+              </div>
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center">
+          <nav className="hidden lg:flex items-center mx-6">
             {navItems.map((item, index) => (
               <button
                 key={item.id}
@@ -72,7 +73,7 @@ const Header = () => {
           </nav>
 
           {/* Right side: Phone + CTA */}
-          <div className="hidden lg:flex items-center gap-5">
+          <div className="hidden lg:flex items-center gap-6">
             <a
               href="tel:18008900428"
               className="flex items-center gap-2 text-gray-600 hover:text-emerald-600 transition-colors duration-200 group"
