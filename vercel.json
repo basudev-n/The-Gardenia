@@ -1,9 +1,8 @@
 {
   "version": 2,
-  "public": false,
   "builds": [
     {
-      "src": "frontend/build",
+      "src": "frontend/build/**",
       "use": "@vercel/static"
     },
     {
@@ -17,16 +16,8 @@
       "dest": "/frontend/api/$1"
     },
     {
-      "src": "^/static/(.*)",
-      "dest": "/frontend/build/static/$1"
-    },
-    {
-      "src": "^/(.*)$",
-      "dest": "/frontend/build/index.html"
-    },
-    {
-      "src": "^/$",
-      "dest": "/frontend/build/index.html"
+      "src": "/(.*)",
+      "dest": "/frontend/build/$1"
     }
   ]
 }
