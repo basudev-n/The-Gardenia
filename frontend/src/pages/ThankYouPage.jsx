@@ -10,11 +10,18 @@ const ThankYouPage = () => {
   useEffect(() => {
     try {
       const intent = location?.state?.intent;
-      if (intent === 'brochure') {
-        // trigger brochure download (expects /brochure.pdf in public)
+      const downloadsByIntent = {
+        brochure: { href: '/brochure.pdf', fileName: 'The-Gardenia-Brochure.pdf' },
+        'floor-plan': { href: '/floor-plan.pdf', fileName: 'The-Gardenia-Floor-Plan.pdf' }
+      };
+
+      const downloadConfig = downloadsByIntent[intent];
+
+      if (downloadConfig) {
+        // trigger document download only after successful lead submission redirect
         const link = document.createElement('a');
-        link.href = '/brochure.pdf';
-        link.download = 'The-Gardenia-Brochure.pdf';
+        link.href = downloadConfig.href;
+        link.download = downloadConfig.fileName;
         document.body.appendChild(link);
         link.click();
         link.remove();

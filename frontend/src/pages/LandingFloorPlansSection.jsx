@@ -39,9 +39,13 @@ const LandingFloorPlansSection = ({ onOpenLeadModal }) => {
       </div>
 
       <div className="mt-6 flex justify-center">
-        <a href="/floor-plan.pdf" download className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-8 py-3 text-base font-semibold text-white hover:bg-emerald-700">
+        <button
+          type="button"
+          onClick={() => onOpenLeadModal && onOpenLeadModal('floor-plan')}
+          className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-8 py-3 text-base font-semibold text-white hover:bg-emerald-700"
+        >
           Download Floor Plan
-        </a>
+        </button>
       </div>
     </section>
     </>
