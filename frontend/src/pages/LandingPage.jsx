@@ -113,7 +113,7 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-[#f7f4ea] text-slate-900">
       <header className="sticky top-0 z-40 border-b border-slate-200/40 bg-white/95 backdrop-blur-md shadow-sm transition-colors">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 md:py-5 lg:px-8">
           <a href="/" aria-label="The Gardenia home" className="flex items-center gap-3">
             <img src={logo} alt="The Gardenia - Ghangapatna, Bhubaneswar" className="h-7 md:h-9 lg:h-10 w-auto" />
             <span className="sr-only">The Gardenia</span>
@@ -121,7 +121,7 @@ const LandingPage = () => {
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Primary navigation" />
 
-          <div className="hidden items-center gap-3 md:flex">
+          <div className="hidden items-center gap-4 md:flex">
             <Button onClick={() => openLeadModal('book-site-visit')} className="rounded-full bg-emerald-700 text-white hover:bg-emerald-800 px-5 py-2 md:px-6 md:py-3 shadow-sm hover:shadow-md transition">
               Book Site Visit
             </Button>
