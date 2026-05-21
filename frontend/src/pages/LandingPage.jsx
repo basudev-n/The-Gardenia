@@ -20,7 +20,7 @@ const reasons = [
   'Premium & Pollution-free Surrounding',
   '100% Vastu Compliant',
   '100 Ft Road Connectivity',
-  'RERA and SBI Approved'
+  'RERA Approved'
 ];
 
 const amenities = [
@@ -119,6 +119,16 @@ const LandingPage = () => {
             <span className="sr-only">The Gardenia</span>
           </a>
 
+          {/* Header badges (Amenities + Starting Price) */}
+          <div className="hidden md:flex items-center gap-3 ml-6">
+            <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">
+              <span>28+ Lifestyle Amenities</span>
+            </div>
+            <div className="flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">
+              <span>79 Lacs Onwards*</span>
+            </div>
+          </div>
+
           <nav className="hidden items-center gap-8 md:flex" aria-label="Primary navigation" />
 
           <div className="hidden items-center gap-4 md:flex">
@@ -152,11 +162,23 @@ const LandingPage = () => {
 
               <p className="mt-5 max-w-2xl text-xl text-white/85 md:text-2xl">2, 3, 4 BHKs Homes & Penthouses.</p>
 
-              <div className="mt-10">
-                <Button onClick={() => openLeadModal('book-site-visit')} size="lg" className="rounded-full bg-emerald-500 px-7 py-7 text-base font-semibold text-white hover:bg-emerald-600">
-                  Book Site Visit
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+              {/* Hero badges: placed below BHK text and above CTA */}
+              <div className="mt-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 bg-white/10 text-white px-3 py-2 rounded-full text-sm font-semibold ring-1 ring-white/20">
+                    <span>28+ Lifestyle Amenities</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white text-emerald-900 px-3 py-2 rounded-full text-sm font-bold shadow-sm">
+                    <span>79 Lacs Onwards*</span>
+                  </div>
+                </div>
+
+                <div className="mt-4 sm:mt-0 sm:ml-6">
+                  <Button onClick={() => openLeadModal('book-site-visit')} size="lg" className="rounded-full bg-emerald-500 px-7 py-7 text-base font-semibold text-white hover:bg-emerald-600">
+                    Book Site Visit
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -213,6 +235,15 @@ const LandingPage = () => {
                     </div>
                   );
                 })}
+              </div>
+
+              <div className="mt-6 flex justify-center sm:justify-end">
+                <Button
+                  onClick={() => openLeadModal('brochure')}
+                  className="rounded-full bg-emerald-700 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 hover:shadow-md"
+                >
+                  Download Brochure
+                </Button>
               </div>
             </div>
           </div>
