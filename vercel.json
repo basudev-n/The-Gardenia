@@ -1,5 +1,5 @@
 {
-  "installCommand": "if [ -f frontend/package-lock.json ]; then cd frontend && npm ci --no-audit --no-fund; elif [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi",
+  "installCommand": "if [ -f frontend/package-lock.json ]; then cd frontend && npm install --legacy-peer-deps --no-audit --no-fund; elif [ -f package-lock.json ]; then npm install --legacy-peer-deps --no-audit --no-fund; else npm install --legacy-peer-deps --no-audit --no-fund; fi",
   "buildCommand": "if [ -f frontend/package.json ]; then cd frontend && npm run build; else npm run build; fi",
   "outputDirectory": "frontend/build"
 }
