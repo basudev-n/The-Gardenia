@@ -1,10 +1,28 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, Home } from 'lucide-react';
 
 const ThankYouPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    try {
+      const intent = location?.state?.intent;
+      if (intent === 'brochure') {
+        // trigger brochure download (expects /brochure.pdf in public)
+        const link = document.createElement('a');
+        link.href = '/brochure.pdf';
+        link.download = 'The-Gardenia-Brochure.pdf';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, [location]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.18),_transparent_40%),linear-gradient(180deg,#f7f4ea_0%,#ffffff_100%)] px-4 py-12">

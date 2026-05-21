@@ -18,6 +18,14 @@ const LandingFloorPlansSection = ({ onOpenLeadModal }) => {
       </div>
 
       <div className="mb-8 overflow-x-auto">
+        <div className="mb-4 flex items-center justify-end">
+          <button
+            onClick={() => onOpenLeadModal && onOpenLeadModal('brochure')}
+            className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-white text-sm font-semibold hover:bg-emerald-700 transition"
+          >
+            Download Brochure
+          </button>
+        </div>
         <table className="w-full table-auto text-left border-collapse">
           <thead>
             <tr className="bg-white/70">
