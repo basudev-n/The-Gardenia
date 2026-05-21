@@ -4,6 +4,6 @@
   "description": "The Gardenia - Luxury Apartments",
   "private": true,
   "scripts": {
-    "build": "cd frontend && npm install && npm run build"
+    "build": "if [ -f frontend/package.json ]; then npm install --prefix frontend && npm run --prefix frontend build; else npm install && npm run build; fi"
   }
 }
