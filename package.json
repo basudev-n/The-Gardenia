@@ -1,9 +1,3 @@
-{
-  "name": "the-gardenia",
-  "version": "1.0.0",
-  "description": "The Gardenia - Luxury Apartments",
-  "private": true,
-  "scripts": {
-    "build": "npm --prefix frontend install --legacy-peer-deps && npm --prefix frontend run build"
-  }
+"scripts": {
+  "build": "cd frontend && npm install --legacy-peer-deps && npm run build"
 }
