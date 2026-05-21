@@ -12,10 +12,5 @@
       "src": "frontend/api/**/*.js",
       "use": "@vercel/node"
     }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/frontend/api/$1" },
-    { "src": "/(.*)", "dest": "/frontend/build/$1" },
-    { "src": "^/$", "dest": "/frontend/build/index.html" }
   ]
 }
