@@ -47,6 +47,16 @@ const Header = () => {
             />
           </div>
 
+          {/* Header badges (Amenities + Starting Price) */}
+          <div className="hidden md:flex items-center gap-3 ml-6">
+            <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">
+              <span>28+ Lifestyle Amenities</span>
+            </div>
+            <div className="flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">
+              <span>79 Lacs Onwards*</span>
+            </div>
+          </div>
+
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center">
             {navItems.map((item, index) => (
@@ -94,6 +104,15 @@ const Header = () => {
       {isMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100 shadow-xl animate-in slide-in-from-top duration-300">
           <nav className="container mx-auto px-6 py-6 flex flex-col gap-1">
+            {/* Mobile badges: show amenities and price at top of mobile menu */}
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex-1 flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-2 rounded-full text-sm font-semibold shadow-sm">
+                <span>28+ Lifestyle Amenities</span>
+              </div>
+              <div className="flex items-center gap-2 bg-emerald-600 text-white px-3 py-2 rounded-full text-sm font-bold shadow-md">
+                <span>79 Lacs Onwards*</span>
+              </div>
+            </div>
             {navItems.map((item) => (
               <button
                 key={item.id}
