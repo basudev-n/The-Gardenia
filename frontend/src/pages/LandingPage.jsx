@@ -119,16 +119,6 @@ const LandingPage = () => {
             <span className="sr-only">The Gardenia</span>
           </a>
 
-          {/* Header badges (Amenities + Starting Price) */}
-          <div className="hidden md:flex items-center gap-3 ml-6">
-            <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">
-              <span>28+ Lifestyle Amenities</span>
-            </div>
-            <div className="flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">
-              <span>79 Lacs Onwards*</span>
-            </div>
-          </div>
-
           <nav className="hidden items-center gap-8 md:flex" aria-label="Primary navigation" />
 
           <div className="hidden items-center gap-4 md:flex">
