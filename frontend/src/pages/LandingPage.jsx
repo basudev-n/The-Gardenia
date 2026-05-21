@@ -9,7 +9,7 @@ import { isValidIndianPhone, normalizeIndianPhone, submitLead } from '@/lib/lead
 import LandingLocationSection from './LandingLocationSection';
 import LandingFloorPlansSection from './LandingFloorPlansSection';
 import LandingGallerySection from './LandingGallerySection';
-import { ArrowRight, CheckCircle2, Dumbbell, Home, MapPin, Sparkles, Waves, Trees, Shield, Baby, Film, Heart, Coffee, X } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Dumbbell, Home, MapPin, X, Waves, Sparkles, Baby, Film, Coffee, Heart, Gamepad2, Trees } from 'lucide-react';
 
 const reasons = [
   'Near Bhubaneswar New City Township',
@@ -24,16 +24,16 @@ const reasons = [
 ];
 
 const amenities = [
-  { name: 'Swimming Pool', icon: Waves, tone: 'from-cyan-50 to-white' },
-  { name: 'State of Art Gym', icon: Dumbbell, tone: 'from-emerald-50 to-white' },
-  { name: 'Clubhouse', icon: Home, tone: 'from-amber-50 to-white' },
-  { name: 'Banquet Hall', icon: Sparkles, tone: 'from-rose-50 to-white' },
-  { name: 'Kids Play Area', icon: Baby, tone: 'from-sky-50 to-white' },
-  { name: 'Mini Theater', icon: Film, tone: 'from-slate-50 to-white' },
-  { name: 'Business Lounge', icon: Coffee, tone: 'from-orange-50 to-white' },
-  { name: 'Wellness Spa', icon: Heart, tone: 'from-pink-50 to-white' },
-  { name: 'Indoor Games Room', icon: Shield, tone: 'from-violet-50 to-white' },
-  { name: 'Cricket Practice Court', icon: Trees, tone: 'from-lime-50 to-white' }
+  { name: 'Swimming Pool', icon: Waves },
+  { name: 'State of Art Gym', icon: Dumbbell },
+  { name: 'Clubhouse', icon: Home },
+  { name: 'Banquet Hall', icon: Sparkles },
+  { name: 'Kids Play Area', icon: Baby },
+  { name: 'Mini Theater', icon: Film },
+  { name: 'Business Lounge', icon: Coffee },
+  { name: 'Wellness Spa', icon: Heart },
+  { name: 'Indoor Games Room', icon: Gamepad2 },
+  { name: 'Cricket Practice Court', icon: Trees }
 ];
 
 const initialFormState = { name: '', phone: '+91' };
@@ -189,67 +189,27 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section id="amenities" className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
-          <div className="relative overflow-hidden rounded-[2.75rem] border border-white/70 bg-[linear-gradient(180deg,#f8f6ef_0%,#f3f0e6_100%)] shadow-[0_24px_90px_rgba(15,23,42,0.08)]">
-            <div className="pointer-events-none absolute -left-24 top-0 h-80 w-80 rounded-full bg-emerald-200/35 blur-3xl" />
-            <div className="pointer-events-none absolute right-[-5rem] top-20 h-72 w-72 rounded-full bg-white/80 blur-3xl" />
+        <section id="amenities" className="mx-auto max-w-7xl px-4 py-8 lg:px-8 lg:py-12">
+          <div className="relative overflow-hidden rounded-[2.5rem] border border-white/70 bg-[linear-gradient(180deg,#f8f6ef_0%,#f3f0e6_100%)] shadow-[0_20px_70px_rgba(15,23,42,0.08)]">
+            <div className="pointer-events-none absolute -left-20 top-0 h-64 w-64 rounded-full bg-emerald-200/30 blur-3xl" />
+            <div className="pointer-events-none absolute right-[-4rem] top-16 h-56 w-56 rounded-full bg-white/70 blur-3xl" />
 
-            <div className="relative grid gap-8 p-6 lg:grid-cols-[1.1fr_0.9fr] lg:p-10">
-              <div className="flex flex-col justify-between gap-8">
-                <div className="max-w-2xl space-y-5">
+            <div className="relative px-4 py-6 sm:px-6 sm:py-8 lg:px-10 lg:py-10">
+              <div className="flex items-end justify-between gap-4">
+                <div>
                   <p className="text-sm font-semibold uppercase tracking-[0.35em] text-emerald-700">World Class Amenities</p>
-                  <h2 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-5xl">
-                    A lifestyle built around comfort, leisure, and everyday ease.
-                  </h2>
-                  <p className="max-w-xl text-base leading-7 text-slate-600 md:text-lg">
-                    From wellness to recreation, every shared space is designed to feel polished, welcoming, and genuinely useful for residents.
-                  </p>
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-3">
-                  <div className="rounded-[1.5rem] border border-white/80 bg-white/85 p-4 shadow-[0_10px_30px_rgba(15,23,42,0.05)] backdrop-blur">
-                    <p className="text-3xl font-semibold text-emerald-700">45+</p>
-                    <p className="mt-1 text-sm font-medium text-slate-600">Premium amenities across the campus</p>
-                  </div>
-                  <div className="rounded-[1.5rem] border border-white/80 bg-white/85 p-4 shadow-[0_10px_30px_rgba(15,23,42,0.05)] backdrop-blur">
-                    <p className="text-3xl font-semibold text-slate-900">10</p>
-                    <p className="mt-1 text-sm font-medium text-slate-600">Featured lifestyle spaces highlighted below</p>
-                  </div>
-                  <div className="rounded-[1.5rem] border border-white/80 bg-[#10261f] p-4 text-white shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-300">Curated experience</p>
-                    <p className="mt-2 text-sm leading-6 text-white/85">Designed to feel more like a private club than a typical apartment project.</p>
-                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-2">
-                {amenities.map((item, index) => {
+              <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-5">
+                {amenities.map((item) => {
                   const Icon = item.icon;
-                  const featured = index < 2;
                   return (
-                    <div
-                      key={item.name}
-                      className={`group relative overflow-hidden rounded-[1.5rem] border border-white/80 bg-gradient-to-br ${item.tone} p-4 shadow-[0_12px_35px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,23,42,0.1)] ${featured ? 'sm:col-span-2' : ''}`}
-                    >
-                      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-300 via-emerald-500 to-amber-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                      <div className="flex items-start gap-4">
-                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-emerald-700 ring-1 ring-emerald-100 transition-transform duration-300 group-hover:scale-105">
-                          <Icon className="h-5 w-5" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-start justify-between gap-3">
-                            <h3 className="text-base font-semibold text-slate-900 md:text-lg">{item.name}</h3>
-                            <span className="rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-500">
-                              {featured ? 'Featured' : 'Amenity'}
-                            </span>
-                          </div>
-                          <p className="mt-2 max-w-sm text-sm leading-6 text-slate-600">
-                            {featured
-                              ? 'Set in a premium common area with generous proportions and an elevated finish.'
-                              : 'Thoughtful shared spaces that make daily living feel more complete.'}
-                          </p>
-                        </div>
+                    <div key={item.name} className="group flex flex-col items-center gap-3 rounded-[1.35rem] border border-white/80 bg-white/90 px-3 py-4 text-center shadow-[0_10px_28px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(15,23,42,0.09)] sm:px-4 sm:py-5">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-50 via-white to-amber-50 text-emerald-700 ring-1 ring-emerald-100 transition-transform duration-300 group-hover:scale-105 sm:h-14 sm:w-14">
+                        <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                       </div>
+                      <h3 className="text-sm font-semibold leading-5 text-slate-900 sm:text-base">{item.name}</h3>
                     </div>
                   );
                 })}
