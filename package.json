@@ -4,6 +4,7 @@
   "description": "The Gardenia - Luxury Apartments",
   "private": true,
   "scripts": {
+    "install:vercel": "cd frontend && npm install --legacy-peer-deps --no-audit --no-fund",
     "build": "if [ -f frontend/package.json ]; then cd frontend && npm run build; else npm run build; fi"
   }
 }
