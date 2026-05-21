@@ -1,5 +1,5 @@
 {
-  "installCommand": "npm run install:vercel",
-  "buildCommand": "if [ -f frontend/package.json ]; then cd frontend && npm run build; else npm run build; fi",
+  "installCommand": "npm install --workspaces --legacy-peer-deps --no-audit --no-fund",
+  "buildCommand": "npm run build",
   "outputDirectory": "frontend/build"
 }
