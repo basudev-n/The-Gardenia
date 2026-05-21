@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "The Gardenia - Luxury Apartments",
   "private": true,
+  "workspaces": [
+    "frontend"
+  ],
   "scripts": {
-    "build": "npm run --prefix frontend build"
+    "build": "npm run build --workspace frontend"
   }
 }
