@@ -1,4 +1,7 @@
 {
   "version": 2,
-  "public": "public"
+  "routes": [
+    { "src": "/static/(.*)", "dest": "/static/$1" },
+    { "src": "^/(?!.*\\.).*$", "dest": "/index.html" }
+  ]
 }
