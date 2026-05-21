@@ -4,7 +4,7 @@ export const mockData = {
   hero: {
     title: "The Gardenia",
     subtitle: "Space, Tranquillity & Modern Elegance",
-    description: "Discover a lifestyle designed for those who appreciate space, tranquillity, and modern elegance. 252 thoughtfully designed homes across 2 iconic residential towers in Bhubaneswar.",
+    description: "2, 3, 4 BHKs Homes & Penthouses.",
     startingPrice: "79 Lacs Onwards*",
     location: "Ghangapatna, Bhubaneswar",
     heroImage: "https://customer-assets.emergentagent.com/job_gardenia-pool/artifacts/h087np0r_WhatsApp%20Image%202026-02-24%20at%2020.23.34%20%281%29.jpeg"

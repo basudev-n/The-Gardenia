@@ -36,14 +36,14 @@ const LandingGallerySection = () => {
   }, [selectedIndex, filtered.length]);
 
   return (
-    <section id="gallery" className="mx-auto max-w-7xl px-4 py-24 lg:px-8">
-      <div className="text-center mb-16">
+    <section id="gallery" className="mx-auto max-w-7xl px-4 py-8 lg:px-8">
+      <div className="text-center mb-8">
         <p className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-700">Gallery</p>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-5xl">Visual Tour</h2>
         <p className="mt-4 text-lg text-slate-600">Explore the beauty and elegance of The Gardenia</p>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-3 mb-16">
+      <div className="flex flex-wrap justify-center gap-2 mb-8">
         {categories.map((cat) => (
           <button
             key={cat}
@@ -59,7 +59,7 @@ const LandingGallerySection = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4 auto-rows-[200px]">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 auto-rows-[150px] md:auto-rows-[200px]">
         {filtered.map((item, index) => {
           const isFeatured = index === 0 || index === 6;
           return (
@@ -67,7 +67,7 @@ const LandingGallerySection = () => {
               key={item.id}
               onClick={() => openLightbox(index)}
               className={`group relative overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer ${
-                isFeatured ? 'col-span-2 row-span-2' : ''
+                isFeatured ? 'md:col-span-2 md:row-span-2' : ''
               }`}
             >
               <img
