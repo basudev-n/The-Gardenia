@@ -1,4 +1,5 @@
 {
-  "buildCommand": "npm run build",
+  "installCommand": "npm ci --prefix frontend --no-audit --no-fund",
+  "buildCommand": "npm run --prefix frontend build",
   "outputDirectory": "frontend/build"
 }
