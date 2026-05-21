@@ -9,7 +9,7 @@ import { isValidIndianPhone, normalizeIndianPhone, submitLead } from '@/lib/lead
 import LandingLocationSection from './LandingLocationSection';
 import LandingFloorPlansSection from './LandingFloorPlansSection';
 import LandingGallerySection from './LandingGallerySection';
-import { ArrowRight, CheckCircle2, Dumbbell, Home, MapPin } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Dumbbell, Home, MapPin, X } from 'lucide-react';
 
 const reasons = [
   'Near Bhubaneswar New City Township',
@@ -61,7 +61,6 @@ const LandingPage = () => {
 
   const openLeadModal = (intent) => {
     setActiveIntent(intent);
-    setIsMenuOpen(false);
     setIsModalOpen(true);
   };
 
