@@ -5,8 +5,8 @@ export const mockData = {
     title: "The Gardenia",
     subtitle: "Space, Tranquillity & Modern Elegance",
     description: "Discover a lifestyle designed for those who appreciate space, tranquillity, and modern elegance. 252 thoughtfully designed homes across 2 iconic residential towers in Bhubaneswar.",
-    startingPrice: "₹79 Lacs*",
-    location: "Bhubaneswar",
+    startingPrice: "79 Lacs Onwards*",
+    location: "Ghangapatna, Bhubaneswar",
     heroImage: "https://customer-assets.emergentagent.com/job_gardenia-pool/artifacts/h087np0r_WhatsApp%20Image%202026-02-24%20at%2020.23.34%20%281%29.jpeg"
   },
 
@@ -253,7 +253,7 @@ export const mockData = {
       id: 1,
       type: "2 BHK",
       area: "1,250 Sq Ft.",
-      price: "₹79 Lacs*",
+      price: "79 Lacs*",
       bedrooms: 2,
       bathrooms: 2,
       features: ["Spacious Balcony", "Modular Kitchen", "Premium Fittings"]
@@ -262,7 +262,7 @@ export const mockData = {
       id: 2,
       type: "3 BHK",
       area: "1,750 Sq Ft.",
-      price: "₹95 Lacs*",
+      price: "95 Lacs*",
       bedrooms: 3,
       bathrooms: 3,
       features: ["Master Bedroom Suite", "Pooja Room", "Premium Fittings"]
@@ -271,7 +271,7 @@ export const mockData = {
       id: 3,
       type: "4 BHK",
       area: "2,400 Sq Ft.",
-      price: "₹1.3 Cr",
+      price: "1.3 Cr",
       bedrooms: 4,
       bathrooms: 4,
       features: ["Private Deck", "Walk-in Closet", "Family Lounge"]
@@ -280,7 +280,7 @@ export const mockData = {
       id: 4,
       type: "5 BHK Penthouse",
       area: "4,800 Sq Ft.",
-      price: "₹1.8 Cr*",
+      price: "1.8 Cr*",
       bedrooms: 5,
       bathrooms: 5,
       features: ["Private Terrace", "Study Room", "Servant Quarter", "Premium Interiors"]

@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { mockData } from '@/mock/data';
 import { isValidIndianPhone, normalizeIndianPhone, submitLead } from '@/lib/leadSubmission';
-import LandingGallerySection from './LandingGallerySection';
 import LandingLocationSection from './LandingLocationSection';
 import LandingFloorPlansSection from './LandingFloorPlansSection';
 import {
@@ -32,7 +31,7 @@ import {
   X
 } from 'lucide-react';
 
-const heroHighlights = ['28+ Lifestyle Amenities', '79 Lacs Onwards*', '2, 3, 4 BHK Homes & Penthouses'];
+const heroHighlights = ['28+ Lifestyle Amenities', '79 Lacs Onwards*', '2, 3, 4 BHKs Homes & Penthouses'];
 
 const reasons = [
   'Near Bhubaneswar New City Township',
@@ -55,7 +54,8 @@ const amenities = [
   { name: 'Mini Theater', icon: Mic2 },
   { name: 'Business Lounge', icon: HeartHandshake },
   { name: 'Wellness Spa', icon: Bath },
-  { name: 'Indoor Games Room', icon: Sparkles }
+  { name: 'Indoor Games Room', icon: Sparkles },
+  { name: 'Cricket Practice Court', icon: ShieldCheck }
 ];
 
 const pricing = [
@@ -184,13 +184,7 @@ const LandingPage = () => {
             <span className="sr-only">The Gardenia</span>
           </a>
 
-          <nav className="hidden items-center gap-8 md:flex">
-            <a className="text-sm font-medium text-slate-600 hover:text-slate-900" href="#overview">Overview</a>
-            <a className="text-sm font-medium text-slate-600 hover:text-slate-900" href="#why">Why Gardenia</a>
-            <a className="text-sm font-medium text-slate-600 hover:text-slate-900" href="#amenities">Amenities</a>
-            <a className="text-sm font-medium text-slate-600 hover:text-slate-900" href="#pricing">Pricing</a>
-            <a className="text-sm font-medium text-slate-600 hover:text-slate-900" href="#connectivity">Connectivity</a>
-          </nav>
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Primary navigation" />
 
           <div className="hidden items-center gap-3 md:flex">
             <Button onClick={() => openLeadModal('brochure')} variant="outline" className="rounded-full border-emerald-200 bg-white text-emerald-700 hover:bg-emerald-50">
@@ -213,13 +207,7 @@ const LandingPage = () => {
 
         {isMenuOpen && (
           <div className="border-t border-slate-200 bg-white px-4 py-4 md:hidden">
-            <div className="grid gap-3 text-sm">
-              <a href="#overview" onClick={() => setIsMenuOpen(false)}>Overview</a>
-              <a href="#why" onClick={() => setIsMenuOpen(false)}>Why Gardenia</a>
-              <a href="#amenities" onClick={() => setIsMenuOpen(false)}>Amenities</a>
-              <a href="#pricing" onClick={() => setIsMenuOpen(false)}>Pricing</a>
-              <a href="#connectivity" onClick={() => setIsMenuOpen(false)}>Connectivity</a>
-            </div>
+            <div className="grid gap-3 text-sm" />
           </div>
         )}
       </header>
@@ -244,7 +232,7 @@ const LandingPage = () => {
               </h1>
 
               <p className="mt-5 max-w-2xl text-xl text-white/85 md:text-2xl">
-                2, 3, 4 BHK Homes & Penthouses crafted for peaceful living, modern comfort and long-term appreciation.
+                2, 3, 4 BHKs Homes & Penthouses crafted for peaceful living, modern comfort and long-term appreciation.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -271,7 +259,7 @@ const LandingPage = () => {
               <div className="mt-10 grid gap-4 sm:grid-cols-3">
                 {[
                   ['28+', 'Lifestyle Amenities'],
-                  ['79 Lacs*', 'Starting Price'],
+                  ['79 Lacs Onwards*', 'Starting Price'],
                   ['Dec 2029', 'Possession']
                 ].map(([value, label]) => (
                   <div key={label} className="rounded-3xl border border-white/15 bg-white/10 p-5 backdrop-blur">
@@ -338,111 +326,60 @@ const LandingPage = () => {
         </section>
 
         <section id="amenities" className="mx-auto max-w-7xl px-4 py-24 lg:px-8">
-          <div className="relative overflow-hidden rounded-[2.75rem] bg-[linear-gradient(180deg,#f4f0e6_0%,#f7f4ea_100%)] shadow-[0_20px_80px_rgba(15,23,42,0.08)] ring-1 ring-white/70">
+          <div className="relative overflow-hidden rounded-[2.75rem] bg-[linear-gradient(180deg,#f4f0e6_0%,#f7f4ea_100%)] shadow-[0_20px_80px_rgba(15,23,42,0.08)] ring-1 ring-white/70 p-8 lg:p-12">
             <div className="pointer-events-none absolute -left-20 top-0 h-72 w-72 rounded-full bg-emerald-200/30 blur-3xl" />
             <div className="pointer-events-none absolute right-0 top-24 h-64 w-64 rounded-full bg-white/70 blur-3xl" />
 
-            <div className="grid gap-10 p-8 lg:grid-cols-[1.05fr_0.75fr] lg:gap-12 lg:p-12">
-              <div>
-                <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-                  <div className="max-w-2xl">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200/70 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-emerald-700 backdrop-blur">
-                      Signature Lifestyle
-                    </div>
-                    <p className="mt-5 text-sm font-semibold uppercase tracking-[0.35em] text-emerald-700">World Class Amenities</p>
-                    <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-5xl">Designed for everyday ease and premium living</h2>
-                    <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-                      Curated leisure, wellness and social spaces that make the community feel complete from day one. Every amenity is positioned to feel intentional, calm and elevated.
-                    </p>
-                  </div>
-                  <Button onClick={() => openLeadModal('brochure')} variant="outline" className="hidden rounded-full border-emerald-200 bg-white text-emerald-700 hover:bg-emerald-50 sm:inline-flex">
-                    Download Brochure
-                  </Button>
+            <div className="relative">
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+                <div className="max-w-2xl">
+                  <p className="text-sm font-semibold uppercase tracking-[0.35em] text-emerald-700">World Class Amenities</p>
+                  <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-5xl">Designed for everyday ease and premium living</h2>
+                  <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
+                    Curated leisure, wellness and social spaces that make the community feel complete from day one. Every amenity is positioned to feel intentional, calm and elevated.
+                  </p>
                 </div>
-
-                <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
-                  {amenities.map((item, index) => {
-                    const Icon = item.icon;
-
-                    return (
-                      <div
-                        key={item.name}
-                        className="group relative overflow-hidden rounded-[1.5rem] border border-white/80 bg-white p-4 shadow-[0_10px_40px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.12)] sm:p-5"
-                      >
-                        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-200 via-emerald-500 to-emerald-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                        <div className="flex flex-col items-start gap-3 sm:flex-row sm:gap-4">
-                          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-50 to-white text-emerald-700 ring-1 ring-emerald-100 transition-colors group-hover:bg-emerald-600 group-hover:text-white sm:h-14 sm:w-14">
-                            <Icon className="h-6 w-6" />
-                          </div>
-                          <div className="min-w-0">
-                            <h3 className="text-base font-semibold text-slate-900 sm:text-lg">{item.name}</h3>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="mt-8 flex justify-center sm:hidden">
-                  <Button onClick={() => openLeadModal('brochure')} className="rounded-full bg-emerald-700 px-7 py-6 text-base font-semibold text-white hover:bg-emerald-800">
-                    Download Brochure
-                  </Button>
-                </div>
+                <Button onClick={() => openLeadModal('brochure')} variant="outline" className="rounded-full border-emerald-200 bg-white text-emerald-700 hover:bg-emerald-50">
+                  Download Brochure
+                </Button>
               </div>
 
-              <div className="self-start rounded-[2.25rem] bg-[#10261f] p-6 text-white shadow-[0_18px_60px_rgba(16,38,31,0.25)] lg:p-8">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-300">Lifestyle at a Glance</p>
-                    <h3 className="mt-3 text-2xl font-semibold tracking-tight">A balanced mix of recreation, wellness and convenience</h3>
-                  </div>
-                  <div className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-white/70">
-                    Premium
-                  </div>
-                </div>
+              <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-5">
+                {amenities.map((item) => {
+                  const Icon = item.icon;
 
-                <div className="mt-6 space-y-4">
-                  {[
-                    ['28+', 'Lifestyle amenities planned across the community'],
-                    ['Clubhouse', 'A social hub for events, gatherings and downtime'],
-                    ['Wellness', 'Spaces that support fitness, play and relaxation']
-                  ].map(([title, description], index) => (
-                    <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
-                      <div className="flex items-center justify-between gap-4">
-                        <p className="text-lg font-semibold text-white">{title}</p>
-                        <span className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-200">0{index + 1}</span>
+                  return (
+                    <div
+                      key={item.name}
+                      className="group relative overflow-hidden rounded-[1.5rem] border border-white/80 bg-white p-4 shadow-[0_10px_40px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.12)] sm:p-5"
+                    >
+                      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-200 via-emerald-500 to-emerald-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      <div className="flex flex-col items-start gap-3 sm:flex-row sm:gap-4">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-50 to-white text-emerald-700 ring-1 ring-emerald-100 transition-colors group-hover:bg-emerald-600 group-hover:text-white sm:h-14 sm:w-14">
+                          <Icon className="h-6 w-6" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="text-base font-semibold text-slate-900 sm:text-lg">{item.name}</h3>
+                        </div>
                       </div>
-                      <p className="mt-1 text-sm leading-6 text-white/75">{description}</p>
                     </div>
-                  ))}
-                </div>
+                  );
+                })}
+              </div>
 
-                <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-2xl bg-white/10 px-4 py-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-200">Community Focus</p>
-                    <p className="mt-2 text-sm leading-6 text-white/80">Spaces that encourage both privacy and connection.</p>
-                  </div>
-                  <div className="rounded-2xl bg-white/10 px-4 py-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-200">Design Language</p>
-                    <p className="mt-2 text-sm leading-6 text-white/80">Calm, polished and brochure-like in every viewport.</p>
-                  </div>
-                </div>
-
-                <div className="mt-6 rounded-2xl bg-white/10 px-4 py-4 text-sm leading-6 text-white/80">
-                  The section now reads like a luxury lifestyle booklet, with stronger hierarchy, richer surfaces and more breathing room.
-                </div>
+              <div className="mt-8 flex justify-center sm:hidden">
+                <Button onClick={() => openLeadModal('brochure')} className="rounded-full bg-emerald-700 px-7 py-6 text-base font-semibold text-white hover:bg-emerald-800">
+                  Download Brochure
+                </Button>
               </div>
             </div>
           </div>
         </section>
 
         
-
-        <LandingGallerySection />
-
         <LandingFloorPlansSection onOpenLeadModal={openLeadModal} />
 
-        <LandingLocationSection />
+        <LandingLocationSection onOpenLeadModal={openLeadModal} />
       </main>
 
       <footer className="border-t border-white/60 bg-white px-4 py-12 text-sm text-slate-600 lg:px-8">
