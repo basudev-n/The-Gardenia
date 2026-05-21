@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "description": "The Gardenia - Luxury Apartments",
   "private": true,
-  "workspaces": [
-    "frontend"
-  ],
   "scripts": {
-    "build": "npm --prefix frontend run build"
+    "build": "npm --prefix frontend install --legacy-peer-deps && npm --prefix frontend run build"
   }
 }
