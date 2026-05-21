@@ -1,38 +1,24 @@
 import React from "react";
 import "@/App.css";
 import { Toaster } from "@/components/ui/sonner";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Amenities from "@/components/Amenities";
-import Gallery from "@/components/Gallery";
-import FloorPlans from "@/components/FloorPlans";
-import Location from "@/components/Location";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import FloatingCTA from "@/components/FloatingCTA";
 import AdminDashboard from "@/components/AdminDashboard";
+import LandingPage from "@/pages/LandingPage";
+import ThankYouPage from "@/pages/ThankYouPage";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 function App() {
-  // Simple client-side routing for admin
-  const isAdmin = window.location.pathname === '/admin';
-
-  if (isAdmin) {
-    return <AdminDashboard />;
-  }
-
   return (
-    <div className="App">
-      <Header />
-      <Hero />
-      <Amenities />
-      <Gallery />
-      <FloorPlans />
-      <Location />
-      <Contact />
-      <Footer />
-      <FloatingCTA />
-      <Toaster />
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/thank-you" element={<ThankYouPage />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        <Toaster />
+      </div>
+    </BrowserRouter>
   );
 }
 

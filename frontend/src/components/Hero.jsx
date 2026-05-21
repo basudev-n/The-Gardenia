@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { ArrowRight, MapPin, Download, Calendar, X, CheckCircle, Phone, User, Home } from 'lucide-react';
 import { Button } from './ui/button';
 import { mockData } from '../mock/data';
+import { isValidIndianPhone, normalizeIndianPhone, submitLead } from '@/lib/leadSubmission';
 
-const PREFERENCES = ['2 BHK', '3 BHK', '3.5 BHK', '5 BHK Penthouse'];
-const API_URL = 'https://gardenia-admin.up.railway.app';
-
+const PREFERENCES = ['2 BHK', '3 BHK', '5 BHK Penthouse'];
 const Hero = () => {
   const { hero } = mockData;
   const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState({ name: '', phone: '', preference: '' });
+  const [form, setForm] = useState({ name: '', phone: '+91', preference: '' });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -29,20 +28,18 @@ const Hero = () => {
       setError('Please fill in your name and phone number.');
       return;
     }
-    if (!/^[0-9]{10}$/.test(form.phone.replace(/\s/g, ''))) {
-      setError('Please enter a valid 10-digit phone number.');
+    if (!isValidIndianPhone(form.phone)) {
+      setError('Please enter a valid +91 phone number with exactly 10 digits.');
       return;
     }
 
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/brochure-lead`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+      await submitLead('/api/brochure-lead', {
+        ...form,
+        phone: normalizeIndianPhone(form.phone),
+        source: 'hero-brochure-form'
       });
-
-      if (!res.ok) throw new Error('Submission failed');
 
       setSubmitted(true);
 
@@ -104,13 +101,7 @@ const Hero = () => {
               {hero.description}
             </p>
 
-            {/* Price Tag */}
-            <div className="inline-block bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-6 py-4 mb-10 animate-in fade-in slide-in-from-bottom-12 duration-700 delay-400">
-              <p className="text-sm text-gray-300 mb-1">Starting from</p>
-              <p className="text-4xl font-bold text-white">{hero.startingPrice}</p>
-            </div>
-
-            {/* CTAs */}
+            {/* Single CTA */}
             <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-14 duration-700 delay-500">
               <Button
                 onClick={scrollToContact}
@@ -118,35 +109,9 @@ const Hero = () => {
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-6 text-lg font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-600/50 hover:scale-105 group"
               >
                 <Calendar className="mr-2 w-5 h-5" />
-                Book Your Site Visit — Free!
+                Book Site Visit
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
-
-              <Button
-                onClick={() => setShowModal(true)}
-                size="lg"
-                variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-6 text-lg font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl group bg-transparent"
-              >
-                <Download className="mr-2 w-5 h-5" />
-                Get e-Brochure
-              </Button>
-            </div>
-
-            {/* Trust Indicators */}
-            <div className="mt-10 flex flex-wrap gap-6 animate-in fade-in duration-700 delay-600">
-              {[
-                { value: '252', label: 'Limited Units' },
-                { value: '28+', label: 'Premium Amenities' },
-                { value: '✓', label: 'RERA Approved' },
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 text-white">
-                  <div className="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center">
-                    <span className="font-bold text-sm">{item.value}</span>
-                  </div>
-                  <span className="text-sm">{item.label}</span>
-                </div>
-              ))}
             </div>
           </div>
         </div>
@@ -263,7 +228,7 @@ const Hero = () => {
                     ) : (
                       <>
                         <Download className="w-4 h-4" />
-                        Download Brochure Now
+                        Submit
                       </>
                     )}
                   </button>
