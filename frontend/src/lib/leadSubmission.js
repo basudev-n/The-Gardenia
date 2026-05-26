@@ -1,48 +1,48 @@
-const DEFAULT_DEV_BASE_URL = 'https://gardenia-admin.up.railway.app';
+export const trimTrailingSlash = (value = '') => String(value).trim().replace(/\/+$/, '');
 
-const trimTrailingSlash = (value = '') => String(value).trim().replace(/\/+$/, '');
-
-const getLeadApiBaseUrl = () => {
-  const explicitBaseUrl = String(
-    process.env.REACT_APP_LEAD_API_BASE_URL || process.env.REACT_APP_API_URL || ''
-  ).trim();
+export const getLeadApiBaseUrl = () => {
+  const explicitBaseUrl = String(process.env.REACT_APP_FORMSPREE_ENDPOINT || '').trim();
 
   if (explicitBaseUrl) {
     return trimTrailingSlash(explicitBaseUrl);
   }
 
-  if (process.env.NODE_ENV === 'development') {
-    return DEFAULT_DEV_BASE_URL;
-  }
-
-  return '';
+  return 'https://formspree.io/f/mjgzpgyz';
 };
 
-const buildLeadApiUrl = (path) => {
-  const baseUrl = getLeadApiBaseUrl();
-  return baseUrl ? `${baseUrl}${path}` : path;
+export const getLeadFormName = (path = '') => {
+  if (path.includes('brochure')) return 'brochure';
+  if (path.includes('landing')) return 'landing';
+  if (path.includes('contact')) return 'contact';
+  return 'lead';
 };
 
-const normalizeIndianPhone = (phone = '') => String(phone).trim().replace(/[\s-]/g, '');
+export const buildLeadApiUrl = () => getLeadApiBaseUrl();
 
-const isValidIndianPhone = (phone = '') => /^\+91\d{10}$/.test(normalizeIndianPhone(phone));
+export const normalizeIndianPhone = (phone = '') => String(phone).trim().replace(/[\s-]/g, '');
 
-const submitLead = async (path, payload) => {
+export const isValidIndianPhone = (phone = '') => /^\+91\d{10}$/.test(normalizeIndianPhone(phone));
+
+export const submitLead = async (path, payload) => {
   let response;
+  const formName = getLeadFormName(path);
+  const requestBody = {
+    ...payload,
+    formName,
+    _subject: `New ${formName} inquiry from The Gardenia`,
+    ...(payload.email ? { _replyto: payload.email } : {})
+  };
+
   try {
-    response = await fetch(buildLeadApiUrl(path), {
+    response = await fetch(buildLeadApiUrl(), {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(requestBody)
     });
   } catch (err) {
-    // In development, if the real API is unreachable (CORS or network),
-    // mock a successful response so local flow (redirect to thank-you) can be tested.
-    if (process.env.NODE_ENV === 'development') {
-      return { success: true };
-    }
     throw err;
   }
 
@@ -60,12 +60,4 @@ const submitLead = async (path, payload) => {
   }
 
   return responseBody;
-};
-
-module.exports = {
-  buildLeadApiUrl,
-  getLeadApiBaseUrl,
-  isValidIndianPhone,
-  normalizeIndianPhone,
-  submitLead
 };
