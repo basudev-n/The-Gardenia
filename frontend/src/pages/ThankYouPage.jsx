@@ -31,6 +31,22 @@ const ThankYouPage = () => {
     }
   }, [location]);
 
+  useEffect(() => {
+    try {
+      if (typeof window === 'undefined') return;
+      if (document.querySelector('script[src*="googletagmanager.com/gtm.js?id=GTM-TLCXQJVD"]')) return;
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      const f = document.getElementsByTagName('script')[0];
+      const j = document.createElement('script');
+      j.async = true;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-TLCXQJVD';
+      f.parentNode.insertBefore(j, f);
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.18),_transparent_40%),linear-gradient(180deg,#f7f4ea_0%,#ffffff_100%)] px-4 py-12">
       <div className="w-full max-w-2xl rounded-[2rem] bg-white p-8 text-center shadow-[0_20px_80px_rgba(15,23,42,0.1)] md:p-12">

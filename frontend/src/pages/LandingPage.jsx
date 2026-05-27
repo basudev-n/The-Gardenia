@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '@/assets/logo.png';
 import { Button } from '@/components/ui/button';
@@ -39,6 +39,22 @@ const amenities = [
 const initialFormState = { name: '', phone: '+91' };
 
 const LandingPage = () => {
+  useEffect(() => {
+    try {
+      if (typeof window === 'undefined') return;
+      // Avoid injecting multiple times
+      if (document.querySelector('script[src*="googletagmanager.com/gtm.js?id=GTM-TLCXQJVD"]')) return;
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      const f = document.getElementsByTagName('script')[0];
+      const j = document.createElement('script');
+      j.async = true;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-TLCXQJVD';
+      f.parentNode.insertBefore(j, f);
+    } catch (e) {
+      // ignore injection errors
+    }
+  }, []);
   const navigate = useNavigate();
   const heroImage = mockData.hero.heroImage;
   
