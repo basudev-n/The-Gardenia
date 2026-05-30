@@ -9,6 +9,7 @@ import { isValidIndianPhone, normalizeIndianPhone, submitLead } from '@/lib/lead
 import LandingLocationSection from './LandingLocationSection';
 import LandingFloorPlansSection from './LandingFloorPlansSection';
 import LandingGallerySection from './LandingGallerySection';
+import { initializeMetaPixel } from '@/lib/metaPixel';
 import { ArrowRight, CheckCircle2, Dumbbell, Home, MapPin, X, Waves, Sparkles, Baby, Film, Coffee, Heart, Gamepad2, Trees } from 'lucide-react';
 
 const reasons = [
@@ -55,6 +56,11 @@ const LandingPage = () => {
       // ignore injection errors
     }
   }, []);
+
+  useEffect(() => {
+    initializeMetaPixel();
+  }, []);
+
   const navigate = useNavigate();
   const heroImage = mockData.hero.heroImage;
   
