@@ -7,7 +7,7 @@ const plans = [
     id: 1,
     type: "2 BHK",
     area: "1,250 sq. ft.*",
-    price: "₹79 Lakh onwards",
+    price: "₹82 Lakh onwards",
     bedrooms: "2",
     bathrooms: "2",
     features: ["Spacious living & dining", "Private balcony", "Modular kitchen", "Covered parking"],
