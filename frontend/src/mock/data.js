@@ -5,7 +5,7 @@ export const mockData = {
     title: "The Gardenia",
     subtitle: "Space, Tranquillity & Modern Elegance",
     description: "2, 3, 4 BHKs Homes & Penthouses.",
-    startingPrice: "79 Lacs Onwards*",
+    startingPrice: "82 Lacs Onwards*",
     location: "Ghangapatna, Bhubaneswar",
     heroImage: "https://customer-assets.emergentagent.com/job_gardenia-pool/artifacts/h087np0r_WhatsApp%20Image%202026-02-24%20at%2020.23.34%20%281%29.jpeg"
   },
@@ -253,7 +253,7 @@ export const mockData = {
       id: 1,
       type: "2 BHK",
       area: "1314 Sq Ft.",
-      price: "79 Lacs*",
+      price: "82 Lacs*",
       bedrooms: 2,
       bathrooms: 2,
       features: ["Spacious Balcony", "Modular Kitchen", "Premium Fittings"]

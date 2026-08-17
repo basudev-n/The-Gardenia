@@ -181,7 +181,7 @@ const LandingPage = () => {
                     <span>28+ Lifestyle Amenities</span>
                   </div>
                   <div className="flex items-center gap-2 bg-white text-emerald-900 px-3 py-2 rounded-full text-sm font-bold shadow-sm">
-                    <span>79 Lacs Onwards*</span>
+                    <span>82 Lacs Onwards*</span>
                   </div>
                 </div>
 

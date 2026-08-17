@@ -53,7 +53,7 @@ const Header = () => {
                 <span>28+ Lifestyle Amenities</span>
               </div>
               <div className="flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">
-                <span>79 Lacs Onwards*</span>
+                <span>82 Lacs Onwards*</span>
               </div>
             </div>
           </div>
@@ -111,7 +111,7 @@ const Header = () => {
                 <span>28+ Lifestyle Amenities</span>
               </div>
               <div className="flex items-center gap-2 bg-emerald-600 text-white px-3 py-2 rounded-full text-sm font-bold shadow-md">
-                <span>79 Lacs Onwards*</span>
+                <span>82 Lacs Onwards*</span>
               </div>
             </div>
             {navItems.map((item) => (
