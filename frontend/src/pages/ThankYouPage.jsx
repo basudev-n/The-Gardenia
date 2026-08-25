@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { initializeMetaPixel } from '@/lib/metaPixel';
 import { CheckCircle2, Home } from 'lucide-react';
 
 const ThankYouPage = () => {
@@ -46,10 +45,6 @@ const ThankYouPage = () => {
     } catch (e) {
       // ignore
     }
-  }, []);
-
-  useEffect(() => {
-    initializeMetaPixel();
   }, []);
 
   return (
